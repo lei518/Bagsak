@@ -23,6 +23,9 @@ def course_view(request, pk):
     }
     return render(request, 'course.html', context)
 
+def professor_dashboard(request):
+    # Code to render the professor dashboard
+    return render(request, 'prof.html')
 
 def login(request):
     if request.method == 'POST':
@@ -36,7 +39,7 @@ def login(request):
             return redirect('home_view')  # Redirect to the home view after successful login
         elif user is not None and user.is_professor:
             auth_login(request, user)
-            return redirect('professor_dashboard')
+            return redirect('class:professor_dashboard')
         else:
             messages.error(request, "Invalid username or password.")  # Add an error message
             return render(request, 'login.html')  # Render the login page again with an error
@@ -44,9 +47,7 @@ def login(request):
         return render(request, 'login.html')
 
 
-def professor_dashboard(request):
-    # Code to render the professor dashboard
-    return render(request, 'prof.html')
+
 
 
 def logout_view(request):

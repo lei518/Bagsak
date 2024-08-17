@@ -36,7 +36,7 @@ def login(request):
 
         if user is not None and user.is_student:
             auth_login(request, user)
-            return redirect('home_view')  # Redirect to the home view after successful login
+            return redirect('class:home_view')  # Redirect to the home view after successful login
         elif user is not None and user.is_professor:
             auth_login(request, user)
             return redirect('class:professor_dashboard')
@@ -52,7 +52,7 @@ def login(request):
 
 def logout_view(request):
     logout(request)
-    return redirect('login')
+    return redirect('class:login')
 
 @login_required
 def change_password(request):
@@ -63,7 +63,7 @@ def change_password(request):
             user = form.save()
             update_session_auth_hash(request, user)  # Important!
             messages.success(request, 'Your password was successfully updated!')
-            return redirect('change_password')  # Redirect to a success page
+            return redirect('class:change_password')  # Redirect to a success page
     else:
         form = PasswordChangeForm(request.user)
     return render(request, 'change_password.html', {'form': form})

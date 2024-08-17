@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0; /* Light background for better readability */
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex; /* Use flexbox for better layout */
+      flex-direction: column; /* Ensure column layout */
+    }
+
+    .dashboard {
+      width: 250px; /* Set a fixed width for the dashboard */
+      height: 100vh;
+      background-color: #333;
+      color: #fff; /* Light text for better contrast */
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      padding: 0; /* Remove padding from dashboard */
+      display: none; /* Hide the dashboard by default */
+      position: fixed; /* Make the dashboard fixed */
+      top: 0; /* Move the dashboard to the top */
+      left: 0; /* Move the dashboard to the left */
+      z-index: 1; /* Bring the dashboard to the front */
+    }
+    .dashboard.show {
+      display: block; /* Show the dashboard when toggled */
+    }
+
+    .dashboard-header {
+      background-color: #890604; /* Use primary color */
+      height: 50px; /* Adjust height as needed */
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Lighter border */
+      padding-top: 10px; /* Add margin between top and content */
+      padding-left: 10px;
+      text-align: left; /* Left align the dashboard header */
+    }
+
+    .dashboard-header h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 0;
+      color: inherit; /* Inherit color from parent */
+    }
+
+    .dashboard-content {
+      padding: 20px;
+    }
+
+    .dashboard-content ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .dashboard-content li {
+      padding: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center; /* Align list items vertically */
+    }
+
+    .dashboard-content li:last-child {
+      border-bottom: none;
+    }
+
+    .dashboard-content a {
+      color: inherit; /* Inherit color from parent */
+      text-decoration: none;
+      flex: 1; /* Allow list items to fill available space */
+    }
+
+    .dashboard-content a:hover {
+      color: #D5A84C; /* Lighter hover color */
+    }
+
+    .navbar {
+      background-color: transparent; /* Remove navbar background */
+      border: none; /* Remove navbar border */
+      margin-top: auto; /* Move logout link to bottom */
+      padding: 0;
+    }
+
+    .navbar.nav-item {
+      margin: 0 10px; /* Add some margin between logout link and content */
+    }
+
+    .toggle-dashboard {
+      position: fixed; /* Make the button fixed */
+      top: 10px; /* Move the button to the top */
+      left: 10px; /* Move the button to the left */
+      z-index: 2; /* Bring the button to the front */
+      background-color: #890604; /* Change the button color to red */
+      color: #FFFFFF; /* Change the text color to white */
+      border: none; /* Remove the button border */
+      font-size: 16px; /* Increase the font size */
+      cursor: pointer; /* Change the cursor to a pointer */
+    }
+
+    /* Media queries for responsive design */
+    @media (max-width: 767.98px) {
+      .dashboard {
+        width: 100%;
+        height: 100vh;
+        padding: 0;
+      }
+
+      .dashboard-header {
+        height: 40px;
+        padding-top: 5px;
+      }
+
+      .dashboard-header h2 {
+        font-size: 1.2rem;
+      }
+
+      .dashboard-content {
+        padding: 10px;
+      }
+
+      .dashboard-content li {
+        padding: 5px;
+      }
+    }
+
+    @media (max-width: 575.98px) {
+      .dashboard {
+        width: 100%;
+        height: 100vh;
+        padding: 0;
+      }
+
+      .dashboard-header {
+        height: 30px;
+        padding-top: 0;
+      }
+
+      .dashboard-header h2 {
+        font-size: 1rem;
+      }
+
+      .dashboard-content {
+        padding: 5px;
+      }
+
+      .dashboard-content li {
+        padding: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <button class="toggle-dashboard">Toggle Dashboard</button>
+  <div class="dashboard">
+    <div class="dashboard-header">
+      <h2>Dashboard</h2>
+    </div>
+    <div class="dashboard-content">
+      <ul>
+        <li><a href="#">Assignments</a></li>
+        <li><a href="#">Courses</a></li>
+        <li><a href="#">Enrollments</a></li>
+        <li><a href="#">Submissions</a></li>
+      </ul>
+      <nav class="navbar">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Change Password Form -->
+  <div class="container mt-5">
+    <h2>Change Password</h2>
+    <form method="post">
+      <a href="{% url 'change_password' %}" class="btn btn-warning">Change Password</a>
+    </form>
+  </div>
+
+  <script>
+    const toggleButton = document.querySelector('.toggle-dashboard');
+    const dashboard = document.querySelector('.dashboard');
+
+    toggleButton.addEventListener('click', () => {
+      dashboard.classList.toggle('show');
+    });
+  </script>
+</body>
+</html>

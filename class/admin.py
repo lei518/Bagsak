@@ -1,21 +1,21 @@
 from django.contrib import admin
-from .models import Course, Student, Enrollment, Assignment, Submission
+from .models import Course, Student, Enrollment, Assignment, Submission, User
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 
 
-# class UserAdmin(BaseUserAdmin):
-#     # Specify the fields to be displayed in the admin panel
-#     fieldsets = BaseUserAdmin.fieldsets + (
-#         (None, {'fields': ('is_professor', 'is_student')}),
-#     )
-#
-#     # Specify the fields to be included in the add form
-#     add_fieldsets = BaseUserAdmin.add_fieldsets + (
-#         (None, {'fields': ('is_professor', 'is_student')}),
-#     )
-#
-#     # Optionally, you can customize the list display
-#     list_display = BaseUserAdmin.list_display + ('is_professor', 'is_student')
+class UserAdmin(BaseUserAdmin):
+    # Specify the fields to be displayed in the admin panel
+    fieldsets = BaseUserAdmin.fieldsets + (
+        (None, {'fields': ('is_professor', 'is_student')}),
+    )
+
+    # Specify the fields to be included in the add form
+    add_fieldsets = BaseUserAdmin.add_fieldsets + (
+        (None, {'fields': ('is_professor', 'is_student')}),
+    )
+
+    # Optionally, you can customize the list display
+    list_display = BaseUserAdmin.list_display + ('is_professor', 'is_student')
 
 
 # Register the models with the custom UserAdmin
@@ -24,4 +24,4 @@ admin.site.register(Student)
 admin.site.register(Enrollment)
 admin.site.register(Assignment)
 admin.site.register(Submission)
-# admin.site.register(User)
+admin.site.register(User, UserAdmin)

@@ -179,11 +179,18 @@
   </div>
 
   <!-- Change Password Form -->
-  <div class="container mt-5">
-    <h2>Change Password</h2>
-    <form method="post">
-      <a href="{% url 'change_password' %}" class="btn btn-warning">Change Password</a>
-    </form>
+  <div class="row">
+      <div class="col-lg-6 container mt-5">
+        <h2>Change Password</h2>
+        <form method="post">
+          <a href="{% url 'change_password' %}" class="btn btn-warning">Change Password</a>
+        </form>
+      </div>
+
+      <div class="col-lg-6">
+        <h2>Subjects Enrolled</h2>
+
+      </div>
   </div>
 
   <script>

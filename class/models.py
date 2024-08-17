@@ -36,10 +36,13 @@ class Submission(models.Model):
     def __str__(self):
         return f"{self.student} submitted {self.assignment}"
 
-# class User(AbstractUser):
-#
-#     is_professor = models.BooleanField('is prof', default=False)
-#     is_student = models.BooleanField('is stud', default=False)
+class User(AbstractUser):
+
+    is_professor = models.BooleanField('is prof', default=False)
+    is_student = models.BooleanField('is stud', default=False)
+
+    # def has_perms(self, perm_list):
+    #     return True
 
 
 

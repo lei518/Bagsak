@@ -9,13 +9,7 @@ class Course(models.Model):
         return self.name
 
 
-class Enrollment(models.Model):
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    enrolled_on = models.DateField(auto_now_add=True)
 
-    def __str__(self):
-        return f"{self.student} enrolled in {self.course}"
 
 class Assignment(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
@@ -43,6 +37,14 @@ class User(AbstractUser):
 
     # def has_perms(self, perm_list):
     #     return True
+
+class Enrollment(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    enrolled_on = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user} enrolled in {self.course}"
 
 
 

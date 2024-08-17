@@ -1,14 +1,27 @@
 from django.contrib.auth import authenticate, login as auth_login, logout
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from .models import User
+from .models import *
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.decorators import login_required
 
 def home_view(request):
-    return render(request, 'index.html')
+    instance = request.user
+    query = Enrollment.objects.filter(user=instance)
+    print(query.values('course__name'))
+    context = {
+        'query': query
+    }
+    return render(request, 'index.html', context)
+
+def course_view(request, pk):
+    obj = Course.objects.get(pk=pk)
+    context = {
+        'obj': obj
+    }
+    return render(request, 'course.html', context)
 
 
 def login(request):

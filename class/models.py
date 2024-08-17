@@ -1,14 +1,13 @@
 from django.db import models
-from accounts.models import *
-from django.contrib.auth.models import AbstractUser, Group, Permission
+
+from django.conf import settings
+from django.contrib.auth.models import AbstractUser, Group, Permission, User
 class Course(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
 
     def __str__(self):
         return self.name
-
-
 
 
 class Assignment(models.Model):
@@ -23,7 +22,7 @@ class Assignment(models.Model):
 
 class Submission(models.Model):
     assignment = models.ForeignKey(Assignment, on_delete=models.CASCADE)
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    student = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     submitted_on = models.DateTimeField(auto_now_add=True)
     file = models.FileField(upload_to='submissions/')
 
@@ -32,8 +31,8 @@ class Submission(models.Model):
 
 class User(AbstractUser):
 
-    is_professor = models.BooleanField('is prof', default=False)
-    is_student = models.BooleanField('is stud', default=False)
+    is_professor = models.BooleanField('is professor', default=False)
+    is_student = models.BooleanField('is student', default=False)
 
     # def has_perms(self, perm_list):
     #     return True

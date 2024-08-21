@@ -10,6 +10,7 @@ from django.contrib.auth.decorators import login_required
 def home_view(request):
     instance = request.user
     query = Enrollment.objects.filter(user=instance)
+
     print(query.values('course__name'))
     context = {
         'query': query
@@ -18,8 +19,10 @@ def home_view(request):
 
 def course_view(request, pk):
     obj = Course.objects.get(pk=pk)
+    announcements = Announcement.objects.filter(course=obj)
     context = {
-        'obj': obj
+        'obj': obj,
+        'announcements': announcements
     }
     return render(request, 'course.html', context)
 

@@ -28,6 +28,14 @@ class Submission(models.Model):
     def __str__(self):
         return f"{self.student} submitted {self.assignment}"
 
+class Announcement(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    posted_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
 class User(AbstractUser):
 
     is_professor = models.BooleanField('is professor', default=False)

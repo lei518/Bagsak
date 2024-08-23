@@ -7,7 +7,13 @@
 <body>
 <h1>{{ obj }} Announcements</h1>
 {% for announcements in announcements %}
-    <li>{{ announcements }} </li>
+    <li>{{ announcements.content }} </li>
 {% endfor %}
+
+{% if user.is_professor %}
+    <a href="{% url 'class:add_announcement' obj.pk %}">
+        <button type="button">Add Announcement</button>
+    </a>
+{% endif %}
 </body>
 </html>

@@ -6,6 +6,15 @@ from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.decorators import login_required
+from .forms import Announcementform
+from django.contrib.auth.decorators import login_required, user_passes_test
+from django.core.exceptions import PermissionDenied
+
+from django.shortcuts import get_object_or_404
+
+
+
+
 
 def home_view(request):
     instance = request.user
@@ -17,6 +26,7 @@ def home_view(request):
     }
     return render(request, 'index.html', context)
 
+
 def course_view(request, pk):
     obj = Course.objects.get(pk=pk)
     announcements = Announcement.objects.filter(course=obj)
@@ -26,9 +36,20 @@ def course_view(request, pk):
     }
     return render(request, 'course.html', context)
 
+
 def professor_dashboard(request):
-    # Code to render the professor dashboard
-    return render(request, 'prof.html')
+    # Get the logged-in user
+    professor = request.user
+
+    # Fetch the courses the professor is associated with
+    courses = Enrollment.objects.filter(user=professor)
+
+    context = {
+        'query': courses
+    }
+
+    return render(request, 'prof.html', context)
+
 
 def login(request):
     if request.method == 'POST':
@@ -50,16 +71,39 @@ def login(request):
         return render(request, 'login.html')
 
 
-
-
-
 def logout_view(request):
     logout(request)
     return redirect('class:login')
 
+
+def professor_required(user):
+    if not user.is_professor:
+        raise PermissionDenied
+    return True
+
+@login_required
+@user_passes_test(professor_required)
+def add_announcement(request, pk):
+    course = get_object_or_404(Course, pk=pk)
+
+    if request.method == 'POST':
+        form = Announcementform(request.POST)
+        if form.is_valid():
+            announcement = form.save(commit=False)
+            announcement.course = course  # Assign the course to the announcement
+            announcement.save()
+            return redirect('class:course_view', pk=course.pk)
+    else:
+        form = Announcementform()
+
+    context = {
+        'form': form,
+        'course': course
+    }
+    return render(request, 'make_announcement.html', context)
+
 @login_required
 def change_password(request):
-
     if request.method == 'POST':
         form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
@@ -70,3 +114,5 @@ def change_password(request):
     else:
         form = PasswordChangeForm(request.user)
     return render(request, 'change_password.html', {'form': form})
+
+

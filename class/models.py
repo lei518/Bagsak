@@ -1,6 +1,7 @@
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser, Group, Permission, User
+from django.core.exceptions import PermissionDenied
 
 class Course(models.Model):
     name = models.CharField(max_length=100)
@@ -64,5 +65,19 @@ class Grade(models.Model):
     def __str__(self):
         return f"{self.grade_value} - {self.student_id} - {self.Course_id}"
 
+class Materials(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='modules')
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    content = models.FileField(upload_to='modules/pdfs/')  # PDF file upload
+    created_on = models.DateTimeField(auto_now_add=True)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE )
 
+    def __str__(self):
+        return self.title
+
+    def save(self, *args, **kwargs):
+        if not self.pk and not self.created_by.is_professor:
+            raise PermissionDenied("Only professors can create modules.")
+        super().save(*args, **kwargs)
 # Create your models here.

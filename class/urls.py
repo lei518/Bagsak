@@ -11,5 +11,6 @@ urlpatterns = [
     path('change-password/', change_password, name='change_password'),
     path('course/<int:pk>/', course_view, name='course_view'),
     path('course/<int:pk>/add_announcement', add_announcement, name='add_announcement'),
+    path('course/<int:pk>/add_module', add_module, name='add_module'),
     # Additional URL patterns for other views if needed
 ]

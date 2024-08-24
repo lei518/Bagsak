@@ -2,18 +2,34 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>{{ obj.name }} - Course Materials</title>
 </head>
 <body>
-<h1>{{ obj }} Announcements</h1>
-{% for announcements in announcements %}
-    <li>{{ announcements.content }} </li>
-{% endfor %}
+    <h1>{{ obj.name }} Announcements</h1>
+    <ul>
+        {% for announcement in announcements %}
+            <li>{{ announcement.title }}: {{ announcement.content }}</li>
+        {% endfor %}
+    </ul>
 
-{% if user.is_professor %}
-    <a href="{% url 'class:add_announcement' obj.pk %}">
-        <button type="button">Add Announcement</button>
-    </a>
-{% endif %}
+    <h1>{{ obj.name }} Materials</h1>
+    <ul>
+        {% for material in materials %}
+            <li>
+                <a href="{{ material.content.url }}" target="_blank">
+                    {{ material.title }} (PDF)
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    {% if user.is_professor %}
+        <a href="{% url 'class:add_announcement' obj.pk %}">
+            <button type="button">Add Announcement</button>
+        </a>
+        <a href="{% url 'class:add_module' obj.pk %}">
+            <button type="button">Add Module</button>
+        </a>
+    {% endif %}
 </body>
 </html>

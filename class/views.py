@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.decorators import login_required
-from .forms import Announcementform
+from .forms import Announcementform, Materialsform
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.exceptions import PermissionDenied
 
@@ -30,18 +30,20 @@ def home_view(request):
 def course_view(request, pk):
     obj = Course.objects.get(pk=pk)
     announcements = Announcement.objects.filter(course=obj)
+    materials = Materials.objects.filter(course=obj)
     context = {
         'obj': obj,
-        'announcements': announcements
+        'announcements': announcements,
+        'materials': materials,
     }
     return render(request, 'course.html', context)
 
 
 def professor_dashboard(request):
-    # Get the logged-in user
+
     professor = request.user
 
-    # Fetch the courses the professor is associated with
+
     courses = Enrollment.objects.filter(user=professor)
 
     context = {
@@ -115,4 +117,24 @@ def change_password(request):
         form = PasswordChangeForm(request.user)
     return render(request, 'change_password.html', {'form': form})
 
+@login_required
+@user_passes_test(professor_required)
+def add_module(request, pk):
+    course = get_object_or_404(Course, pk=pk)
 
+    if request.method == 'POST':
+        form = Materialsform(request.POST, request.FILES)
+        if form.is_valid():
+            module = form.save(commit=False)
+            module.course = course  # Assign the course to the module
+            module.created_by = request.user  # Set the creator as the logged-in professor
+            module.save()
+            return redirect('class:course_view', pk=course.pk)
+    else:
+        form = Materialsform()
+
+    context = {
+        'form': form,
+        'course': course
+    }
+    return render(request, 'add_module.html', context)

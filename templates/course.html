@@ -1,265 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ obj.name }} - Course Materials</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f0f0f0;
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .dashboard {
-            width: 250px;
-            height: 100vh;
-            background-color: #333;
-            color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-            padding: 0;
-            display: block;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1;
-        }
-
-        .dashboard.hide {
-            display: none;
-        }
-
-        .dashboard-header {
-            background-color: #890604;
-            height: 50px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            padding-top: 10px;
-            padding-left: 10px;
-            text-align: left;
-        }
-
-        .dashboard-header h2 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 0;
-            color: inherit;
-        }
-
-        .dashboard-content {
-            padding: 20px;
-        }
-
-        .dashboard-content ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .dashboard-content li {
-            padding: 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            display: flex;
-            align-items: center;
-        }
-
-        .dashboard-content li:last-child {
-            border-bottom: none;
-        }
-
-        .dashboard-content a {
-            color: inherit;
-            text-decoration: none;
-            flex: 1;
-        }
-
-        .dashboard-content a:hover {
-            color: #D5A84C;
-        }
-
-        .navbar {
-            background-color: transparent;
-            border: none;
-            margin-top: auto;
-            padding: 0;
-        }
-
-        .navbar.nav-item {
-            margin: 0 10px;
-        }
-
-        .toggle-dashboard {
-            position: fixed;
-            top: 10px;
-            left: 10px;
-            z-index: 2;
-            background-color: #890604;
-            color: #FFFFFF;
-            border: none;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        .content-container {
-            margin-left: 260px;
-            padding: 20px;
-            transition: margin-left 0.3s ease;
-        }
-
-        .content-container.expanded {
-            margin-left: 0;
-        }
-
-        /* Button styles for Add Announcement and Add Module */
-        .custom-btn {
-            background-color: #890604;
-            color: #FFFFFF;
-            border: none;
-            font-size: 16px;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .custom-btn:hover {
-            background-color: #a12c1b;
-        }
-
-        /* Card styles for announcements and materials */
-        .card {
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-            padding: 20px;
-            transition: box-shadow 0.3s ease;
-        }
-
-        .card:hover {
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        .card h2, .card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            color: #333;
-        }
-
-        .card p {
-            font-size: 1rem;
-            color: #555;
-            line-height: 1.6;
-        }
-
-        .announcement-list, .material-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .announcement-list li, .material-list li {
-            margin-bottom: 10px;
-        }
-
-        .material-list a {
-            color: #2980b9;
-            font-size: 1.1rem;
-            text-decoration: none;
-        }
-
-        .material-list a:hover {
-            color: #3498db;
-            text-decoration: underline;
-        }
-
-        /* Responsive styles */
-        @media (max-width: 767.98px) {
-            .dashboard {
-                width: 100%;
-                height: 100vh;
-            }
-
-            .dashboard-header h2 {
-                font-size: 1.2rem;
-            }
-
-            .content-container {
-                margin-left: 0;
-                padding: 20px;
-            }
-        }
-
-        @media (max-width: 575.98px) {
-            .dashboard {
-                width: 100%;
-                height: 100vh;
-            }
-
-            .dashboard-header h2 {
-                font-size: 1rem;
-            }
-
-            .content-container {
-                margin-left: 0;
-                padding: 20px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <!-- Toggle button for showing/hiding dashboard -->
-    <button class="toggle-dashboard">Hide Dashboard</button>
-
-    <!-- Dashboard Sidebar -->
-    <div class="dashboard">
-        <div class="dashboard-header">
-            <h2>Dashboard</h2>
-        </div>
-        <div class="dashboard-content">
-            <ul>
-                <li><a href="#">Assignments</a></li>
-                <li><a href="#">Courses</a></li>
-                <li><a href="#">Enrollments</a></li>
-                <li><a href="#">Submissions</a></li>
-                <li><a href="{% url 'class:change_password' %}">Change Password</a></li>
-            </ul>
-            <nav class="navbar">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'class:logout' %}">Logout</a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-    </div>
-
+{% extends 'taskbar.html' %}
+{% load static %}
+{% block content %}
     <!-- Main Content -->
     <div class="content-container">
         <h1>{{ obj.name }} Announcements</h1>
-        <ul class="announcement-list">
-            {% for announcement in announcements %}
-                <li>
-                    <div class="card">
-                        <h3>{{ announcement.title }}</h3>
-                        <p>{{ announcement.content }}</p>
-                    </div>
-                </li>
-            {% endfor %}
-        {% if user.is_professor %}
+    {% if user.is_professor %}
             <a href="{% url 'class:add_announcement' obj.pk %}">
                 <button type="button" class="custom-btn">Add Announcement</button>
             </a>
           {% endif %}
+        <ul class="announcement-list">
+            {% for announcement in announcements %}
+                <li>
+                    <div class="announcement-container">
+                        <h3>{{ announcement.title }}</h3>
+                        <div class="announcement-item">
+                        <p>{{ announcement.content }}</p>
+                    </div>
+                      </div>
+                </li>
+            {% endfor %}
+
         </ul>
 
         <h1>{{ obj.name }} Materials</h1>
-        <ul class="material-list">
+        {% if user.is_professor %}
+            <a href="{% url 'class:add_module' obj.pk %}">
+                <button type="button" class="custom-btn">Add Module</button>
+            </a>
+        {% endif %}
+        <ul class="content-container">
             {% for material in materials %}
                 <li>
-                    <div class="card">
+                    <div class="announcement-container">
                         <h3>{{ material.title }}</h3>
                         <p><a href="{{ material.content.url }}" target="_blank">Download PDF</a></p>
                     </div>
@@ -267,29 +40,5 @@
             {% endfor %}
         </ul>
 
-        {% if user.is_professor %}
-            <a href="{% url 'class:add_module' obj.pk %}">
-                <button type="button" class="custom-btn">Add Module</button>
-            </a>
-        {% endif %}
-    </div>
 
-    <script>
-        const toggleButton = document.querySelector('.toggle-dashboard');
-        const dashboard = document.querySelector('.dashboard');
-        const contentContainer = document.querySelector('.content-container');
-
-        toggleButton.addEventListener('click', () => {
-            dashboard.classList.toggle('hide');
-            contentContainer.classList.toggle('expanded');
-
-            // Update the button text depending on the dashboard state
-            if (dashboard.classList.contains('hide')) {
-                toggleButton.textContent = 'Show Dashboard';
-            } else {
-                toggleButton.textContent = 'Hide Dashboard';
-            }
-        });
-    </script>
-</body>
-</html>
+   {% endblock %}

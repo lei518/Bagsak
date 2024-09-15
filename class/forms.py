@@ -5,9 +5,9 @@ from .models import Announcement, Materials
 class Announcementform(ModelForm):
     class Meta:
         model = Announcement
-        fields = ('content',)
+        fields = ('title','content',)
 
 class Materialsform(ModelForm):
     class Meta:
         model = Materials
-        fields = ('course', 'title', 'description', 'content', 'created_by', )
+        fields = ('title', 'content',)

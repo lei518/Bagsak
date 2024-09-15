@@ -11,4 +11,7 @@ class Quiz(models.Model):
 
     def get_questions(self):
         return self.questions_set.all()
+
+    class Meta:
+        verbose_name_plural = 'Quizzes'
 # Create your models here.

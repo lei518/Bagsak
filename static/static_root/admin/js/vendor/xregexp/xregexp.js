@@ -2775,7 +2775,7 @@ var classScope = 'class';
 var nativeTokens = {
     // Any native multicharacter token in default scope, or any single character
     'default': /\\(?:0(?:[0-3][0-7]{0,2}|[4-7][0-7]?)?|[1-9]\d*|x[\dA-Fa-f]{2}|u(?:[\dA-Fa-f]{4}|{[\dA-Fa-f]+})|c[A-Za-z]|[\s\S])|\(\?(?:[:=!]|<[=!])|[?*+]\?|{\d+(?:,\d*)?}\??|[\s\S]/,
-    // Any native multicharacter token in character class scope, or any single character
+    // Any native multicharacter token in character class_app scope, or any single character
     'class': /\\(?:[0-3][0-7]{0,2}|[4-7][0-7]?|x[\dA-Fa-f]{2}|u(?:[\dA-Fa-f]{4}|{[\dA-Fa-f]+})|c[A-Za-z]|[\s\S])|[\s\S]/
 };
 // Any backreference or dollar-prefixed character in replacement strings
@@ -3172,7 +3172,7 @@ function registerFlag(flag) {
  * @param {String} pattern Original pattern from which an XRegExp object is being built.
  * @param {String} flags Flags being used to construct the regex.
  * @param {Number} pos Position to search for tokens within `pattern`.
- * @param {Number} scope Regex scope to apply: 'default' or 'class'.
+ * @param {Number} scope Regex scope to apply: 'default' or 'class_app'.
  * @param {Object} context Context object to use for token handler functions.
  * @returns {Object} Object with properties `matchLength`, `output`, and `reparse`; or `null`.
  */
@@ -3263,7 +3263,7 @@ function toObject(value) {
  * native regular expression in that additional syntax and flags are supported. The returned object
  * is in fact a native `RegExp` and works with all native methods.
  *
- * @class XRegExp
+ * @class_app XRegExp
  * @constructor
  * @param {String|RegExp} pattern Regex pattern string, or an existing regex object to copy.
  * @param {String} [flags] Any combination of flags.
@@ -3418,12 +3418,12 @@ XRegExp._pad4 = pad4;
  *   to replace the matched token within all future XRegExp regexes. Has access to persistent
  *   properties of the regex being built, through `this`. Invoked with three arguments:
  *   - The match array, with named backreference properties.
- *   - The regex scope where the match was found: 'default' or 'class'.
+ *   - The regex scope where the match was found: 'default' or 'class_app'.
  *   - The flags used by the regex, including any flags in a leading mode modifier.
  *   The handler function becomes part of the XRegExp construction process, so be careful not to
  *   construct XRegExps within the function or you will trigger infinite recursion.
  * @param {Object} [options] Options object with optional properties:
- *   - `scope` {String} Scope where the token applies: 'default', 'class', or 'all'.
+ *   - `scope` {String} Scope where the token applies: 'default', 'class_app', or 'all'.
  *   - `flag` {String} Single-character flag that triggers the token. This also registers the
  *     flag, which prevents XRegExp from throwing an 'unknown flag' error when the flag is used.
  *   - `optionalFlags` {String} Any custom flags checked for within the token `handler` that are
@@ -4475,7 +4475,7 @@ XRegExp.addToken(
  * to support code points greater than U+FFFF. Avoids converting code points above U+FFFF to
  * surrogate pairs (which could be done without flag `u`), since that could lead to broken behavior
  * if you follow a `\u{N..}` token that references a code point above U+FFFF with a quantifier, or
- * if you use the same in a character class.
+ * if you use the same in a character class_app.
  */
 XRegExp.addToken(
     /\\u{([\dA-Fa-f]+)}/,
@@ -4502,9 +4502,9 @@ XRegExp.addToken(
 );
 
 /*
- * Empty character class: `[]` or `[^]`. This fixes a critical cross-browser syntax inconsistency.
+ * Empty character class_app: `[]` or `[^]`. This fixes a critical cross-browser syntax inconsistency.
  * Unless this is standardized (per the ES spec), regex syntax can't be accurately parsed because
- * character class endings can't be determined.
+ * character class_app endings can't be determined.
  */
 XRegExp.addToken(
     /\[(\^?)\]/,

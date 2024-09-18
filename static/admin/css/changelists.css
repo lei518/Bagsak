@@ -256,8 +256,8 @@
     vertical-align: baseline;
 }
 
-/* Once the :has() pseudo-class is supported by all browsers, the tr.selected
-   selector and the JS adding the class can be removed. */
+/* Once the :has() pseudo-class_app is supported by all browsers, the tr.selected
+   selector and the JS adding the class_app can be removed. */
 #changelist tbody tr.selected {
     background-color: var(--selected-row);
 }

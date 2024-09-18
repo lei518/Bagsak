@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.exceptions import PermissionDenied
 
 from django.shortcuts import get_object_or_404
-
+from quizzes.models import Quiz  # Import the Quiz model
 
 
 
@@ -31,10 +31,12 @@ def course_view(request, pk):
     obj = Course.objects.get(pk=pk)
     announcements = Announcement.objects.filter(course=obj)
     materials = Materials.objects.filter(course=obj)
+    quizzes = Quiz.objects.filter(course=obj)
     context = {
         'obj': obj,
         'announcements': announcements,
         'materials': materials,
+        'quizzes': quizzes,
     }
     return render(request, 'course.html', context)
 

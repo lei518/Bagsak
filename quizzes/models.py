@@ -1,6 +1,8 @@
 from django.db import models
+from class_app.models import Course
 class Quiz(models.Model):
     name = models.CharField(max_length=120)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
     topic = models.CharField(max_length=120)
     no_of_questions = models.IntegerField()
     time = models.IntegerField(help_text="duration of the quiz")

@@ -1166,7 +1166,7 @@ function setDocument( node ) {
 	} );
 
 	// Support: IE 9 - 11+, Edge 12 - 18+
-	// IE/Edge don't support the :scope pseudo-class.
+	// IE/Edge don't support the :scope pseudo-class_app.
 	support.scope = assert( function() {
 		return document.querySelectorAll( ":scope" );
 	} );
@@ -1812,7 +1812,7 @@ Expr = jQuery.expr = {
 
 		PSEUDO: function( pseudo, argument ) {
 
-			// pseudo-class names are case-insensitive
+			// pseudo-class_app names are case-insensitive
 			// https://www.w3.org/TR/selectors/#pseudo-classes
 			// Prioritize by case sensitivity in case custom pseudos are added with uppercase letters
 			// Remember that setFilters inherits from pseudos
@@ -8257,7 +8257,7 @@ jQuery.fn.extend( {
 		return this.each( function() {
 			if ( isValidValue ) {
 
-				// Toggle individual class names
+				// Toggle individual class_app names
 				self = jQuery( this );
 
 				for ( i = 0; i < classNames.length; i++ ) {
@@ -8271,7 +8271,7 @@ jQuery.fn.extend( {
 					}
 				}
 
-			// Toggle whole class name
+			// Toggle whole class_app name
 			} else if ( value === undefined || type === "boolean" ) {
 				className = getClass( this );
 				if ( className ) {
@@ -8280,7 +8280,7 @@ jQuery.fn.extend( {
 					dataPriv.set( this, "__className__", className );
 				}
 
-				// If the element has a class name or if we're passed `false`,
+				// If the element has a class_app name or if we're passed `false`,
 				// then remove the whole classname (if there was one, the above saved it).
 				// Otherwise bring back whatever was previously saved (if anything),
 				// falling back to the empty string if nothing was stored.

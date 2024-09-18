@@ -41,4 +41,39 @@
         </ul>
 
 
+
+<!-- Modal -->
+<div class="modal fade" id="quizStartModal" tabindex="-1" aria-labelle
+     dby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Start Quiz</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="modal-body-confirm"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+       <div class="h1">{{ obj.name }} Quizzes</div>
+    <hr>
+   {% for quiz in quizzes %}
+        <button
+            class="btn btn-link modal-button"
+            data-pk=" {{ quiz.pk }}"
+            data-quiz="{{ quiz.name }}"
+            data-questions="{{ quiz.no_of_questions }}"
+            data-time="{{ quiz.time }}"
+            data-pass="{{ quiz.req_score_to_pass }}"
+            data-bs-toggle="modal"
+            data-bs-target="#quizStartModal">
+        {{ quiz.name }}
+        </button>
+
+{% endfor %}
+    </hr>
    {% endblock %}

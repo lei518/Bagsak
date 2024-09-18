@@ -61,7 +61,7 @@ class Migration(migrations.Migration):
                 ('file', models.FileField(upload_to='assignments/')),
                 ('description', models.TextField()),
                 ('due_date', models.DateTimeField()),
-                ('course', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='class.course')),
+                ('course', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='class_app.course')),
             ],
         ),
         migrations.CreateModel(
@@ -69,7 +69,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('enrolled_on', models.DateField(auto_now_add=True)),
-                ('course', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='class.course')),
+                ('course', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='class_app.course')),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
@@ -79,7 +79,7 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('submitted_on', models.DateTimeField(auto_now_add=True)),
                 ('file', models.FileField(upload_to='submissions/')),
-                ('assignment', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='class.assignment')),
+                ('assignment', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='class_app.assignment')),
                 ('student', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),

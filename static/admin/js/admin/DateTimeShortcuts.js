@@ -1,7 +1,7 @@
 /*global Calendar, findPosX, findPosY, get_format, gettext, gettext_noop, interpolate, ngettext, quickElement*/
 // Inserts shortcut buttons after all of the following:
-//     <input type="text" class="vDateField">
-//     <input type="text" class="vTimeField">
+//     <input type="text" class_app="vDateField">
+//     <input type="text" class_app="vTimeField">
 'use strict';
 {
     const DateTimeShortcuts = {
@@ -24,8 +24,8 @@
         calendarLinkName: 'calendarlink', // name of the link that is used to toggle
         clockDivName: 'clockbox', // name of clock <div> that gets toggled
         clockLinkName: 'clocklink', // name of the link that is used to toggle
-        shortCutsClass: 'datetimeshortcuts', // class of the clock and cal shortcuts
-        timezoneWarningClass: 'timezonewarning', // class of the warning for timezone mismatch
+        shortCutsClass: 'datetimeshortcuts', // class_app of the clock and cal shortcuts
+        timezoneWarningClass: 'timezonewarning', // class_app of the warning for timezone mismatch
         timezoneOffset: 0,
         init: function() {
             const serverOffset = document.body.dataset.adminUtcOffset;
@@ -135,16 +135,16 @@
             // Create clock link div
             //
             // Markup looks like:
-            // <div id="clockbox1" class="clockbox module">
+            // <div id="clockbox1" class_app="clockbox module">
             //     <h2>Choose a time</h2>
-            //     <ul class="timelist">
+            //     <ul class_app="timelist">
             //         <li><a href="#">Now</a></li>
             //         <li><a href="#">Midnight</a></li>
             //         <li><a href="#">6 a.m.</a></li>
             //         <li><a href="#">Noon</a></li>
             //         <li><a href="#">6 p.m.</a></li>
             //     </ul>
-            //     <p class="calendar-cancel"><a href="#">Cancel</a></p>
+            //     <p class_app="calendar-cancel"><a href="#">Cancel</a></p>
             // </div>
 
             const clock_box = document.createElement('div');
@@ -263,18 +263,18 @@
             //
             // Markup looks like:
             //
-            // <div id="calendarbox3" class="calendarbox module">
+            // <div id="calendarbox3" class_app="calendarbox module">
             //     <h2>
-            //           <a href="#" class="link-previous">&lsaquo;</a>
-            //           <a href="#" class="link-next">&rsaquo;</a> February 2003
+            //           <a href="#" class_app="link-previous">&lsaquo;</a>
+            //           <a href="#" class_app="link-next">&rsaquo;</a> February 2003
             //     </h2>
-            //     <div class="calendar" id="calendarin3">
+            //     <div class_app="calendar" id="calendarin3">
             //         <!-- (cal) -->
             //     </div>
-            //     <div class="calendar-shortcuts">
+            //     <div class_app="calendar-shortcuts">
             //          <a href="#">Yesterday</a> | <a href="#">Today</a> | <a href="#">Tomorrow</a>
             //     </div>
-            //     <p class="calendar-cancel"><a href="#">Cancel</a></p>
+            //     <p class_app="calendar-cancel"><a href="#">Cancel</a></p>
             // </div>
             const cal_box = document.createElement('div');
             cal_box.style.display = 'none';

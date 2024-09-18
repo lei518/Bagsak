@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('class', '0002_grades'),
+        ('class_app', '0002_grades'),
     ]
 
     operations = [
@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
                 ('title', models.CharField(max_length=200)),
                 ('content', models.TextField()),
                 ('posted_on', models.DateTimeField(auto_now_add=True)),
-                ('course', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='class.course')),
+                ('course', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='class_app.course')),
             ],
         ),
     ]

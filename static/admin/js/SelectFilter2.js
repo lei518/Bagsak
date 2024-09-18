@@ -18,7 +18,7 @@ Requires core.js and SelectBox.js.
 
             for (const p of from_box.parentNode.getElementsByTagName('p')) {
                 if (p.classList.contains("info")) {
-                    // Remove <p class="info">, because it just gets in the way.
+                    // Remove <p class_app="info">, because it just gets in the way.
                     from_box.parentNode.removeChild(p);
                 } else if (p.classList.contains("help")) {
                     // Move help text up to the top so it isn't below the select
@@ -28,14 +28,14 @@ Requires core.js and SelectBox.js.
                 }
             }
 
-            // <div class="selector"> or <div class="selector stacked">
+            // <div class_app="selector"> or <div class_app="selector stacked">
             const selector_div = quickElement('div', from_box.parentNode);
             // Make sure the selector div is at the beginning so that the
             // add link would be displayed to the right of the widget.
             from_box.parentNode.prepend(selector_div);
             selector_div.className = is_stacked ? 'selector stacked' : 'selector';
 
-            // <div class="selector-available">
+            // <div class_app="selector-available">
             const selector_available = quickElement('div', selector_div);
             selector_available.className = 'selector-available';
             const title_available = quickElement('h2', selector_available, interpolate(gettext('Available %s') + ' ', [field_name]));
@@ -72,7 +72,7 @@ Requires core.js and SelectBox.js.
             const choose_all = quickElement('a', selector_available, gettext('Choose all'), 'title', interpolate(gettext('Click to choose all %s at once.'), [field_name]), 'href', '#', 'id', field_id + '_add_all_link');
             choose_all.className = 'selector-chooseall';
 
-            // <ul class="selector-chooser">
+            // <ul class_app="selector-chooser">
             const selector_chooser = quickElement('ul', selector_div);
             selector_chooser.className = 'selector-chooser';
             const add_link = quickElement('a', quickElement('li', selector_chooser), gettext('Choose'), 'title', gettext('Choose'), 'href', '#', 'id', field_id + '_add_link');
@@ -80,7 +80,7 @@ Requires core.js and SelectBox.js.
             const remove_link = quickElement('a', quickElement('li', selector_chooser), gettext('Remove'), 'title', gettext('Remove'), 'href', '#', 'id', field_id + '_remove_link');
             remove_link.className = 'selector-remove';
 
-            // <div class="selector-chosen">
+            // <div class_app="selector-chosen">
             const selector_chosen = quickElement('div', selector_div, '', 'id', field_id + '_selector_chosen');
             selector_chosen.className = 'selector-chosen';
             const title_chosen = quickElement('h2', selector_chosen, interpolate(gettext('Chosen %s') + ' ', [field_name]));

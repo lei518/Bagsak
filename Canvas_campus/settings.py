@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'class',
+    'class_app',
     'questions',
     'quizzes',
     'results',
@@ -142,4 +142,4 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
-AUTH_USER_MODEL = 'class.User'  # Replace 'your_app_name' with the actual app name
+AUTH_USER_MODEL = 'class_app.User'  # Replace 'your_app_name' with the actual app name

@@ -69,7 +69,7 @@
    {% for quiz in quizzes %}
         <button
             class="btn btn-link modal-button"
-            data-pk=" {{ quiz.pk }}"
+            data-pk="{{ quiz.pk }}"
             data-quiz="{{ quiz.name }}"
             data-questions="{{ quiz.no_of_questions }}"
             data-time="{{ quiz.time }}"

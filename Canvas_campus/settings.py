@@ -123,10 +123,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [
-    BASE_DIR / "static_my_folder",
-    BASE_DIR / "quizzes" / "static",
-]
+STATICFILES_DIRS = [BASE_DIR / "static_my_folder",]
+
 STATIC_ROOT = os.path.join(BASE_DIR, "static", "static_root")
 
 

@@ -1,4 +1,9 @@
+
 {% extends 'taskbar.html' %}
+{% load static %}
+{% block scripts %}
+<script src="{% static 'quizzes/main.js' %}?v=1" defer></script>
+{% endblock scripts %}
 {% load static %}
 {% block content %}
     <!-- Main Content -->
@@ -53,8 +58,8 @@
       </div>
       <div class="modal-body" id="modal-body-confirm"></div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+        <button type="button" id="start-button" class="btn btn-success">Start</button>
       </div>
     </div>
   </div>
@@ -75,5 +80,5 @@
         </button>
 
 {% endfor %}
-    </hr>
-   {% endblock %}
+    </div>
+{% endblock %}

@@ -9,9 +9,15 @@ class Question(models.Model):
     def __str__(self):
         return str(self.text)
 
-
     def get_answers(self):
+        """Return all answers related to this question."""
         return self.answer_set.all()
+
+    def get_correct_answer(self):
+        """Return the correct answer for this question."""
+        correct_answer = self.answer_set.filter(correct=True).first()
+        return correct_answer if correct_answer else None
+
 
 class Answer(models.Model):
     text = models.CharField(max_length=200)
@@ -20,6 +26,4 @@ class Answer(models.Model):
     created = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return f"question: {self.question.text}, answer: {self.text}, correct: {self.correct}"
-
-# Create your models here.
+        return f"Question: {self.question.text}, Answer: {self.text}, Correct: {self.correct}"

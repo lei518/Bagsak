@@ -18,7 +18,7 @@ if (modalBody && startBtn) {
 
             modalBody.innerHTML = `
                 <div class="h5 mb-3">Are you sure you want to begin <b>${name}</b>?</div>
-<!--                <div class="text-muted">-->
+                <div class="text-muted">
                     <ul>
                         <li>No of questions: <b>${numQuestions}</b></li>
                         <li>Score to pass: <b>${score_to_pass}%</b></li>

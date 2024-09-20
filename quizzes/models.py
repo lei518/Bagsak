@@ -7,7 +7,7 @@ class Quiz(models.Model):
     topic = models.CharField(max_length=120)
     no_of_questions = models.IntegerField()
     time = models.IntegerField(help_text="duration of the quiz")
-    req_score_to_pass = models.IntegerField(help_text="score to pass")
+    req_score_to_pass = models.FloatField(help_text="score to pass")
 
     def __str__(self):
         return f"{self.name}-{self.topic}"

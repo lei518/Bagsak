@@ -1,5 +1,18 @@
 {% extends "taskbar.html" %}
+{% load static %}
+
+{% block scripts %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Add this line -->
+<script src="{% static 'quizzes/quiz.js' %}?v=1" defer></script>
+{% endblock scripts %}
 
 {% block content %}
 {{ quiz_info.name }}
+
+    <form id="'quiz_form" class="-3 mb-3">
+    {% csrf_token %}
+    <div id="quiz_box"> </div>
+    <button type="submit" class="btn btn-danger mt-3"> submit </button>
+    </form>
+
 {% endblock content %}

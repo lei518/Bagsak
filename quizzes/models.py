@@ -1,5 +1,6 @@
 from django.db import models
 from class_app.models import Course
+import random
 class Quiz(models.Model):
     name = models.CharField(max_length=120)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
@@ -12,7 +13,9 @@ class Quiz(models.Model):
         return f"{self.name}-{self.topic}"
 
     def get_questions(self):
-        return self.questions_set.all()
+        questions = list(self.question_set.all())
+        random.shuffle(questions)
+        return questions[:self.no_of_questions]
 
     class Meta:
         verbose_name_plural = 'Quizzes'

@@ -109,7 +109,7 @@ def save_quiz_view(request, course_pk, quiz_pk):
 
             # Calculate the final score as a percentage
             final_score = (score / total_questions) * 100
-            print(f"Final score: {final_score}%")
+            print(f"Final score: {final_score}% score: {score}")
 
             # Check if the user passed or failed based on the required score to pass
             if final_score >= quiz.req_score_to_pass:

@@ -1,11 +1,11 @@
 from django.contrib.auth import authenticate, login as auth_login, logout
-from django.http import HttpResponse
+
 from django.shortcuts import render, redirect
 from .models import *
 from django.contrib import messages
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
-from django.contrib.auth.decorators import login_required
+
 from .forms import Announcementform, Materialsform
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.core.exceptions import PermissionDenied

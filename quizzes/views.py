@@ -112,22 +112,17 @@ def save_quiz_view(request, course_pk, quiz_pk):
             print(f"Final score: {final_score}% score: {score}")
 
             # Check if the user passed or failed based on the required score to pass
-            if final_score >= quiz.req_score_to_pass:
-                return JsonResponse({
-                    'success': True,
-                    'message': 'Quiz saved successfully!',
-                    'score': final_score,
-                    'results': results,
-                    'passed': True,
-                })
-            else:
-                return JsonResponse({
-                    'success': True,
-                    'message': 'Quiz saved successfully!',
-                    'score': final_score,
-                    'results': results,
-                    'passed': False,
-                })
+            passed = final_score >= quiz.req_score_to_pass
+
+            # Send the score, results, and passing status to the frontend
+            return JsonResponse({
+                'success': True,
+                'message': 'Quiz saved successfully!',
+                'score': final_score,
+                'results': results,
+                'passed': passed,
+                'passing_score': quiz.req_score_to_pass  # Send the passing score to the frontend
+            })
 
         except Exception as e:
             # Log and return any error encountered

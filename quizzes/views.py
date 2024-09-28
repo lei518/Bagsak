@@ -1,8 +1,15 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect, get_object_or_404
+from class_app.models import Course
 from .models import Quiz
 from django.views.generic import ListView
 from django.http import JsonResponse
 from questions.models import Question, Answer
+from django.forms import formset_factory
+from django.contrib.auth.decorators import login_required, user_passes_test
+from .forms import QuizForm, QuestionFormSet, AnswerFormSet
+from django.core.exceptions import PermissionDenied
+from django.forms import modelformset_factory
+from .forms import QuizForm, QuestionForm, AnswerForm, QuizSetupForm
 
 class QuizListView(ListView):
     model = Quiz
@@ -10,8 +17,9 @@ class QuizListView(ListView):
 
 
 def quiz_view(request, course_pk, quiz_pk):
-    quiz = Quiz.objects.get(pk=quiz_pk)  # Use quiz_pk here
-    return render(request, 'quiz.html', {'quiz_info': quiz})
+    quiz = get_object_or_404(Quiz, pk=quiz_pk)
+    return render(request, 'quiz.html', {'quiz': quiz})
+
 
 def quiz_data_view(request, course_pk, quiz_pk):
     try:
@@ -131,3 +139,83 @@ def save_quiz_view(request, course_pk, quiz_pk):
 
     # If the request isn't a valid AJAX POST, return an error
     return JsonResponse({'error': 'Invalid request'}, status=400)
+
+
+
+@login_required
+@user_passes_test(lambda u: u.is_professor)
+def create_quiz(request, course_id):
+    course = get_object_or_404(Course, pk=course_id)
+
+    # Step 1: Get the number of questions and choices
+    if request.method == 'POST' and 'setup_quiz' in request.POST:
+        setup_form = QuizSetupForm(request.POST)
+        if setup_form.is_valid():
+            num_questions = setup_form.cleaned_data['number_of_questions']
+            choices_per_question = setup_form.cleaned_data['choices_per_question']
+
+            # Store these values in the session to access them in the next step
+            request.session['num_questions'] = num_questions
+            request.session['choices_per_question'] = choices_per_question
+
+            return redirect('create_quiz_step2', course_id=course_id)
+
+    else:
+        setup_form = QuizSetupForm()
+
+    return render(request, 'setup_quiz.html', {'setup_form': setup_form, 'course': course})
+
+# Step 2: Display dynamic formsets based on input from Step 1
+@login_required
+@user_passes_test(lambda u: u.is_professor)
+def create_quiz_step2(request, course_id):
+    course = get_object_or_404(Course, pk=course_id)
+
+    # Get the number of questions and choices from the session
+    num_questions = request.session.get('num_questions', None)
+    choices_per_question = request.session.get('choices_per_question', None)
+
+    if not num_questions or not choices_per_question:
+        return redirect('create_quiz', course_id=course_id)
+
+    QuestionFormSet = modelformset_factory(Question, form=QuestionForm, extra=num_questions)
+    AnswerFormSet = modelformset_factory(Answer, form=AnswerForm, extra=choices_per_question)
+
+    if request.method == 'POST':
+        quiz_form = QuizForm(request.POST)
+        question_formset = QuestionFormSet(request.POST, prefix='questions')
+
+        if quiz_form.is_valid() and question_formset.is_valid():
+            quiz = quiz_form.save(commit=False)
+            quiz.course = course
+            quiz.save()
+
+            questions = question_formset.save(commit=False)
+            for index, question in enumerate(questions):
+                question.quiz = quiz
+                question.save()
+
+                # Save answers for each question
+                answer_formset = AnswerFormSet(request.POST, prefix=f'answers-{index}')
+                if answer_formset.is_valid():
+                    answers = answer_formset.save(commit=False)
+                    for answer in answers:
+                        answer.question = question
+                        answer.save()
+
+            return redirect('course_view', pk=course.pk)
+    else:
+        quiz_form = QuizForm()
+        question_formset = QuestionFormSet(queryset=Question.objects.none(), prefix='questions')
+        answer_formsets = [
+            AnswerFormSet(queryset=Answer.objects.none(), prefix=f'answers-{i}')
+            for i in range(num_questions)
+        ]
+
+    context = {
+        'quiz_form': quiz_form,
+        'question_formset': question_formset,
+        'answer_formsets': answer_formsets,
+        'course': course,
+    }
+    return render(request, 'create_quiz.html', context)

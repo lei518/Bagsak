@@ -1,0 +1,23 @@
+<form method="POST">
+    {% csrf_token %}
+    <h2>Create a new quiz</h2>
+    {{ quiz_form.as_p }}
+
+    <h3>Questions</h3>
+    {{ question_formset.management_form }}
+    {% for question_form in question_formset %}
+        <div class="question-form">
+            {{ question_form.as_p }}
+
+            <h4>Answers</h4>
+            {{ answer_formsets.forloop.counter0.management_form }}
+            {% for answer_form in answer_formsets.forloop.counter0 %}
+                <div class="answer-form">
+                    {{ answer_form.as_p }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+
+    <button type="submit">Save Quiz</button>
+</form>

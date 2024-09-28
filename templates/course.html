@@ -81,4 +81,9 @@
 
 {% endfor %}
     </div>
+    {% if user.is_professor %}
+            <a href="{% url 'quizzes:create_quiz' obj.pk %}">
+                <button type="button" class="custom-btn">Create Quiz</button>
+            </a>
+        {% endif %}
 {% endblock %}

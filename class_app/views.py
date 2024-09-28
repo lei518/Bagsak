@@ -94,7 +94,7 @@ def add_announcement(request, pk):
         form = Announcementform(request.POST)
         if form.is_valid():
             announcement = form.save(commit=False)
-            announcement.course = course  # Assign the course to the announcement
+            announcement.course = course  # Manually assign the course
             announcement.save()
             return redirect('class:course_view', pk=course.pk)
     else:
@@ -105,7 +105,6 @@ def add_announcement(request, pk):
         'course': course
     }
     return render(request, 'make_announcement.html', context)
-
 @login_required
 def change_password(request):
     if request.method == 'POST':

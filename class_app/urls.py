@@ -7,6 +7,7 @@ urlpatterns = [
     path('homepage/', home_view, name='home_view'),
     path('', login, name='login'),
     path('logout/', logout_view, name='logout'),
+    path('redirect_home/', redirect_home, name='redirect_home'),
     path('professor/', professor_dashboard, name='professor_dashboard'),
     path('change-password/', change_password, name='change_password'),
     path('course/<int:pk>/', course_view, name='course_view'),

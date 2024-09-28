@@ -114,11 +114,21 @@ def change_password(request):
             user = form.save()
             update_session_auth_hash(request, user)  # Important!
             messages.success(request, 'Your password was successfully updated!')
-            return redirect('class:change_password')  # Redirect to a success page
+            return render(request, 'change_password.html', {'form': form})
+
     else:
         form = PasswordChangeForm(request.user)
     return render(request, 'change_password.html', {'form': form})
 
+
+@login_required
+def redirect_home(request):
+    if request.user.is_student:
+        return redirect('class:home_view')  # Redirect to the student dashboard
+    elif request.user.is_professor:
+        return redirect('class:professor_dashboard')  # Redirect to the professor dashboard
+    else:
+        return redirect('default_homepage')  # Fallback if neither
 @login_required
 @user_passes_test(professor_required)
 def add_module(request, pk):

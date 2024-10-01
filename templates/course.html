@@ -1,11 +1,12 @@
+{% extends 'taskbar.html'%}
 
-{% extends 'taskbar.html' %}
 {% load static %}
 {% block scripts %}
 <script src="{% static 'quizzes/main.js' %}?v=1" defer></script>
 {% endblock scripts %}
 {% load static %}
-{% block content %}
+{% block inner_content %}
+
     <!-- Main Content -->
     <div class="content-container">
         <h1>{{ obj.name }} Announcements</h1>
@@ -86,4 +87,4 @@
                 <button type="button" class="custom-btn">Create Quiz</button>
             </a>
         {% endif %}
-{% endblock %}
+{% endblock inner_content %}

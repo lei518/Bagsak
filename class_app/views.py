@@ -41,11 +41,18 @@ def course_view(request, pk):
     return render(request, 'course.html', context)
 
 
+def material_view(request, pk):
+    obj = Course.objects.get(pk=pk)
+    materials = Materials.objects.filter(course=obj)
+    context = {
+        'obj': obj,
+        'materials': materials,
+    }
+    return render(request, 'materials_view.html', context)
+
 def professor_dashboard(request):
 
     professor = request.user
-
-
     courses = Enrollment.objects.filter(user=professor)
 
     context = {

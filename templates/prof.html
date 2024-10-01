@@ -191,27 +191,27 @@
   </style>
 </head>
 <body>
-  <button class="toggle-dashboard">Hide Dashboard</button> <div class="dashboard">
-    <div class="dashboard-header">
-      <h2>Dashboard</h2>
-    </div>
-    <div class="dashboard-content">
-      <ul>
-        <li><a href="#">Assignments</a></li>
-        <li><a href="#">Courses</a></li>
-        <li><a href="#">Enrollments</a></li>
-        <li><a href="#">Submissions</a></li>
-        <li><a href="{% url 'class:change_password' %}">Change Password</a></li>
-      </ul>
-      <nav class="navbar">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'class:logout' %}">Logout</a>
-          </li>
-        </ul>
-      </nav>
-    </div>
-  </div>
+{#  <button class="toggle-dashboard">Hide Dashboard</button> <div class="dashboard">#}
+{#    <div class="dashboard-header">#}
+{#      <h2>Dashboard</h2>#}
+{#    </div>#}
+{#    <div class="dashboard-content">#}
+{#      <ul>#}
+{#        <li><a href="#">Announcements</a></li>#}
+{#        <li><a href="#">Assignments / Quizzes</a></li>#}
+{#        <li><a href="#">Modules</a></li>#}
+{#        <li><a href="#">Submissions</a></li>#}
+{#        <li><a href="{% url 'class:change_password' %}">Change Password</a></li>#}
+{#      </ul>#}
+{#      <nav class="navbar">#}
+{#        <ul class="navbar-nav ml-auto">#}
+{#          <li class="nav-item">#}
+{#            <a class="nav-link" href="{% url 'class:logout' %}">Logout</a>#}
+{#          </li>#}
+{#        </ul>#}
+{#      </nav>#}
+{#    </div>#}
+{#  </div>#}
 
   <div class="courses">
     {% for foo in query %}

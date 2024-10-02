@@ -10,9 +10,5 @@
             <button type="submit" class="submit-btn">Submit</button>
         </form>
     </div>
-       {% if user.is_professor %}
-            <a href="{% url 'class:add_module' obj.pk %}">
-                <button type="button" class="custom-btn">Add Module</button>
-            </a>
-        {% endif %}
+
 {% endblock %}

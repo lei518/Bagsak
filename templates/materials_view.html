@@ -82,7 +82,11 @@
             background-color: #890604;
         }
     </style>
-
+{% if user.is_professor %}
+            <a href="{% url 'class:add_module' obj.pk %}">
+                <button type="button" class="custom-btn">Add Module</button>
+            </a>
+        {% endif %}
     <div class="canvas-dashboard">
         <!-- First section -->
         <div class="module-section">

@@ -4,7 +4,7 @@ from .models import Quiz
 from django.views.generic import ListView
 from django.http import JsonResponse
 from questions.models import Question, Answer
-from django.forms import formset_factory
+from django.forms import formset_factory, inlineformset_factory
 from django.contrib.auth.decorators import login_required, user_passes_test
 from .forms import QuizForm, QuestionFormSet, AnswerFormSet
 from django.core.exceptions import PermissionDenied
@@ -158,7 +158,8 @@ def create_quiz(request, course_id):
             request.session['num_questions'] = num_questions
             request.session['choices_per_question'] = choices_per_question
 
-            return redirect('create_quiz_step2', course_id=course_id)
+            # Redirect to Step 2 after setting session data
+            return redirect('quizzes:create_quiz_step2', course_id=course_id)
 
     else:
         setup_form = QuizSetupForm()
@@ -169,41 +170,58 @@ def create_quiz(request, course_id):
 @login_required
 @user_passes_test(lambda u: u.is_professor)
 def create_quiz_step2(request, course_id):
+    # Get course object
     course = get_object_or_404(Course, pk=course_id)
 
-    # Get the number of questions and choices from the session
-    num_questions = request.session.get('num_questions', None)
-    choices_per_question = request.session.get('choices_per_question', None)
+    # Get the number of questions and choices from session
+    num_questions = request.session.get('num_questions')
+    choices_per_question = request.session.get('choices_per_question')
 
+    # Redirect back if session data is missing
     if not num_questions or not choices_per_question:
-        return redirect('create_quiz', course_id=course_id)
+        return redirect('quizzes:create_quiz', course_id=course_id)
 
-    QuestionFormSet = modelformset_factory(Question, form=QuestionForm, extra=num_questions)
-    AnswerFormSet = modelformset_factory(Answer, form=AnswerForm, extra=choices_per_question)
+    # Use inline formsets for handling related models (Quiz -> Question -> Answer)
+    QuestionFormSet = inlineformset_factory(
+        Quiz, Question, form=QuestionForm, extra=num_questions, can_delete=True
+    )
+    AnswerFormSet = inlineformset_factory(
+        Question, Answer, form=AnswerForm, extra=choices_per_question, can_delete=True
+    )
 
     if request.method == 'POST':
         quiz_form = QuizForm(request.POST)
-        question_formset = QuestionFormSet(request.POST, prefix='questions')
+        question_formset = QuestionFormSet(request.POST, instance=course, prefix='questions')
 
-        if quiz_form.is_valid() and question_formset.is_valid():
+        # Initialize list to hold all answer formsets for each question
+        answer_formsets = [
+            AnswerFormSet(request.POST, prefix=f'answers-{i}', instance=question)
+            for i, question in enumerate(question_formset.forms)
+        ]
+
+        # Validate all forms
+        if quiz_form.is_valid() and question_formset.is_valid() and all([af.is_valid() for af in answer_formsets]):
+            # Save the quiz form without committing yet
             quiz = quiz_form.save(commit=False)
             quiz.course = course
             quiz.save()
 
+            # Save the questions and answers
             questions = question_formset.save(commit=False)
             for index, question in enumerate(questions):
                 question.quiz = quiz
                 question.save()
 
-                # Save answers for each question
-                answer_formset = AnswerFormSet(request.POST, prefix=f'answers-{index}')
-                if answer_formset.is_valid():
-                    answers = answer_formset.save(commit=False)
-                    for answer in answers:
-                        answer.question = question
-                        answer.save()
+                # Save answers for the current question
+                current_answer_formset = answer_formsets[index]
+                answers = current_answer_formset.save(commit=False)
+                for answer in answers:
+                    answer.question = question
+                    answer.save()
 
-            return redirect('course_view', pk=course.pk)
+            # Redirect to the course view after successful submission
+            return redirect('quizzes:course_view', pk=course.pk)
+
     else:
         quiz_form = QuizForm()
         question_formset = QuestionFormSet(queryset=Question.objects.none(), prefix='questions')

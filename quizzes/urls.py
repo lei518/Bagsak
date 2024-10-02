@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import quiz_view, QuizListView, quiz_data_view, save_quiz_view, create_quiz, create_quiz_step2
+from .views import *
 
 app_name = 'quizzes'
 
@@ -13,9 +13,10 @@ urlpatterns = [
     # Fetching quiz data (again course_pk and quiz_pk as integers)
     path('course/<int:course_pk>/<int:quiz_pk>/data', quiz_data_view, name='quiz_data_view'),
 
-    # Step 1: Creating a new quiz, only course_id is needed (as an integer)
+    # Step 1 URL
     path('course/<int:course_id>/create_quiz/', create_quiz, name='create_quiz'),
 
-    # Step 2: Dynamic question and answer input based on number of questions and choices
-    path('course/<int:course_id>/create_quiz/create_quiz_step2/', create_quiz_step2, name='create_quiz_step2'),
+    # Step 2 URL (Important for this issue)
+    path('course/<int:course_id>/create_quiz/step2/', create_quiz_step2, name='create_quiz_step2'),
 ]
+

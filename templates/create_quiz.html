@@ -5,15 +5,22 @@
 
     <h3>Questions</h3>
     {{ question_formset.management_form }}
+
+    <!-- Loop through each question form in the question formset -->
     {% for question_form in question_formset %}
         <div class="question-form">
+            <h4>Question {{ forloop.counter }}:</h4>
             {{ question_form.as_p }}
 
-            <h4>Answers</h4>
+            <h5>Answers:</h5>
+            <!-- Get the corresponding answer formset for the current question -->
             {{ answer_formsets.forloop.counter0.management_form }}
             {% for answer_form in answer_formsets.forloop.counter0 %}
                 <div class="answer-form">
                     {{ answer_form.as_p }}
+                    <label>
+                        {{ answer_form.correct }} Mark as correct  <!-- Checkbox for correct answer -->
+                    </label>
                 </div>
             {% endfor %}
         </div>

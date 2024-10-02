@@ -71,7 +71,6 @@ def material_view(request, pk):
     return render(request, 'materials_view.html', context)
 
 def professor_dashboard(request):
-
     professor = request.user
     courses = Enrollment.objects.filter(user=professor)
 

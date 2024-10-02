@@ -18,6 +18,7 @@ class Assignment(models.Model):
     description = models.TextField()
     due_date = models.DateTimeField()
 
+
     def __str__(self):
         return self.title
 

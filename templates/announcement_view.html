@@ -101,6 +101,7 @@
                             <i class="module-icon">📄</i>
                             <h3>{{ announcement.title }}</h3>
                             <p>{{ announcement.content }}</p>
+                            <p><small>Posted on: {{ announcement.posted_on|date:"F d, Y" }}</small></p>
                         </li>
                     {% endfor %}
                 </ul>

@@ -22,6 +22,7 @@
                         <h3>{{ announcement.title }}</h3>
                         <div class="announcement-item">
                         <p>{{ announcement.content }}</p>
+                            <p><small>Posted on: {{ announcement.posted_on|date:"F d, Y" }}</small></p>
                     </div>
                       </div>
                 </li>
@@ -40,12 +41,12 @@
                 <li>
                     <div class="announcement-container">
                         <h3>{{ material.title }}</h3>
+                        <p><small>Posted on: {{ material.created_on|date:"F d, Y" }}</small></p>
                         <p><a href="{{ material.content.url }}" target="_blank">Download PDF</a></p>
                     </div>
                 </li>
             {% endfor %}
         </ul>
-
 
 
 <!-- Modal -->

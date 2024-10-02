@@ -15,6 +15,7 @@
        {% if user.is_student %}
         <li><a href="{% url 'class:home_view' %}">Courses</a></li>
         {% endif %}
+        <li><a href="{% url 'class:course_view' obj.pk %}">Home</a></li>
         <li><a href="{% url 'class:announcement_view' obj.pk %}">Announcements</a></li>
         <li><a href="{% url 'class:activities_view' obj.pk %}">Assignments / Quizzes</a></li>
         <li><a href="{% url 'class:material_view' obj.pk %}">Modules</a></li>

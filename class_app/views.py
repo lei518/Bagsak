@@ -41,6 +41,26 @@ def course_view(request, pk):
     return render(request, 'course.html', context)
 
 
+def announcement_view(request, pk):
+    obj = Course.objects.get(pk=pk)
+    announcements = Announcement.objects.filter(course=obj)
+    context = {
+        'obj': obj,
+        'announcements': announcements,
+    }
+    return render(request, 'announcement_view.html', context)
+
+
+def activities_view(request, pk):
+    obj = Course.objects.get(pk=pk)
+    quizzes = Quiz.objects.filter(course=obj)
+    context = {
+        'obj': obj,
+        'quizzes': quizzes,
+    }
+    return render(request, 'activities_view.html', context)
+
+
 def material_view(request, pk):
     obj = Course.objects.get(pk=pk)
     materials = Materials.objects.filter(course=obj)

@@ -14,5 +14,7 @@ urlpatterns = [
     path('course/<int:pk>/add_announcement', add_announcement, name='add_announcement'),
     path('course/<int:pk>/add_module', add_module, name='add_module'),
     path('course/<int:pk>/materials', material_view, name='material_view'),
+    path('course/<int:pk>/announcements', announcement_view, name='announcement_view'),
+    path('course/<int:pk>/activities', activities_view, name='activities_view'),
     # Additional URL patterns for other views if needed
 ]

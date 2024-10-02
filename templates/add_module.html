@@ -1,11 +1,8 @@
 <!-- add_module.html -->
 {% extends 'form_style.html' %}
-
 {% block title %}Add Module{% endblock %}
-
 {% block content %}
     <h1>Add Module</h1>
-
     <div class="form-container">
         <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
@@ -13,4 +10,9 @@
             <button type="submit" class="submit-btn">Submit</button>
         </form>
     </div>
+       {% if user.is_professor %}
+            <a href="{% url 'class:add_module' obj.pk %}">
+                <button type="button" class="custom-btn">Add Module</button>
+            </a>
+        {% endif %}
 {% endblock %}

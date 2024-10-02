@@ -1,0 +1,125 @@
+{% extends 'taskbar.html' %}
+{% block inner_content %}
+    <style>
+        /* General Canvas Module List Style */
+        .canvas-dashboard {
+            width: 80%;
+            margin: 0 auto;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        /* Accordion-style Sections for Modules */
+        .module-section {
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+
+        .module-header {
+            background-color: #f1f1f1;
+            padding: 15px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .module-content {
+            display: none; /* Initially collapsed */
+            padding: 15px;
+            border-top: 1px solid #ddd;
+            background-color: #fff;
+        }
+
+        .module-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .module-item:last-child {
+            border-bottom: none;
+        }
+
+        .module-item a {
+            text-decoration: none;
+            color: #890604;
+            font-size: 16px;
+        }
+
+        /* Icon Style */
+        .module-icon {
+            margin-right: 10px;
+            font-size: 14px;
+            vertical-align: middle;
+        }
+
+        .module-header .toggle-icon {
+            float: right;
+            transition: transform 0.3s ease;
+        }
+
+        .module-header.collapsed .toggle-icon {
+            transform: rotate(90deg);
+        }
+
+        /* Task Button */
+        .custom-btn {
+            background-color: #890604;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        .custom-btn:hover {
+            background-color: #890604;
+        }
+    </style>
+ {% if user.is_professor %}
+            <a href="{% url 'class:add_announcement' obj.pk %}">
+                <button type="button" class="custom-btn">Add Announcement</button>
+            </a>
+          {% endif %}
+    <div class="canvas-dashboard">
+        <!-- First section -->
+        <div class="module-section">
+            <div class="module-header" onclick="toggleModuleContent(this)">
+                {{ obj.name }} ANNOUNCEMENTS EEDIT PA
+                <span class="toggle-icon">›</span>
+            </div>
+            <div class="module-content">
+                <ul class="materials-list">
+                    {% for announcement in announcements %}
+                        <li class="module-item">
+                            <i class="module-icon">📄</i>
+                            <h3>{{ announcement.title }}</h3>
+                            <p>{{ announcement.content }}</p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript to toggle module content visibility
+        function toggleModuleContent(headerElement) {
+            var content = headerElement.nextElementSibling;
+            var toggleIcon = headerElement.querySelector('.toggle-icon');
+            if (content.style.display === "block") {
+                content.style.display = "none";
+                toggleIcon.classList.add("collapsed");
+            } else {
+                content.style.display = "block";
+                toggleIcon.classList.remove("collapsed");
+            }
+        }
+    </script>
+{% endblock inner_content %}
